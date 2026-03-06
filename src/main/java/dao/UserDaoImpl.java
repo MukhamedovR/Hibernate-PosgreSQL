@@ -5,7 +5,6 @@ import exception.DatabaseException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
-
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -26,10 +25,22 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getById(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            User user = session.get(User.class, id);
-            return user;
+            return session.get(User.class, id);
         } catch (Exception e) {
-            throw new DatabaseException("Ошибка при поиске пользователя по ID: " + id, e);
+            throw new DatabaseException("Ошибка при получении пользователя по ID: " + id, e);
+        }
+    }
+
+    @Override
+    public void update(User user) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.merge(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw new DatabaseException("Ошибка при обновлении данных пользователя", e);
         }
     }
 
