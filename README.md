@@ -1,11 +1,15 @@
 User Service (Java + Hibernate + PostgreSQL)
+
 Консольное приложение для управления пользователями (CRUD) без использования Spring. Реализовано с соблюдением многослойной архитектуры и покрыто тестами.
+
 Стек технологий
+
 Java 17+
 Hibernate 6 (ORM)
 PostgreSQL (в Docker)
 Maven (сборка проекта)
 JUnit 5, Mockito & Testcontainers (тестирование)
+
 Как запустить базу данных
 Для работы приложения необходимо запустить PostgreSQL в Docker контейнере:
 bash
